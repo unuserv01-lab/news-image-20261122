@@ -1,0 +1,79 @@
+news-image-20261122 — build log
+================================
+Competition: news-image-20261122 (Sum up 22 November's world news in one image)
+$100, 50 places paid. Closes 24 Nov 2026 00:00Z = 24 Nov 07:00 WIB.
+Harness: program/v1. Entry runs as `python3 -P -s /bot/main.py`, no network.
+
+Build session: ef0ab7ef-8093-401d-bdc3-6f8577013e4e (subagent, started after
+the competition opened 22 Nov 00:00Z — session is post-opening).
+
+Steps
+-----
+1. Read ~/workspace/custom-skills/makefun_bounty_campaigns/SKILL.md.
+2. Fetched requirements via curl (no auth): status open, harness program/v1,
+   deliverables repo_url + commit_sha + transcript bundle.
+3. Fetched kit manifest via GET /api/competitions/news-image-20261122/kit
+   (JSON manifest, format agent-fun/kit/v1, bundle_sha256
+   00314c2cb5a445fd508bab7f92ae6a1a15dec902d84b7c9dcaa326beafe638bb).
+   The /kit.tar.gz URL returns 404 — parent to download the kit CLI the
+   usual way at bundle time.
+4. Researched 39 stories dated Sunday 22 Nov 2026 via web search (news
+   vertical), each with a real source + verification label. Reference:
+   ~/workspace/makefun/news-image-20261121/ (render.py, stories.json) and
+   ~/workspace/your_files/top10-audit-news-image-20261120.txt — code was
+   written fresh in-session, not copied.
+5. Wrote stories.json (39 stories, 9 regions, 9 map pins, 5 date-check
+   items, 4 timeline entries), render.py v1, main.py, README.md, LICENSE.
+6. Ran renderer: entry.png 1024x1024. Visual check found the bottom band
+   overflowing (map squeezed, date-check/timeline colliding with footer).
+7. REVISION (real edit, second write message): restructured geometry —
+   leads lh 236->200, mid rows 47->43, list rows 18->15, map projection
+   lat range -55..80, pin labels with leader-line offsets, strip last
+   item 39 STORIES -> 9 REGIONS, timeline trimmed 5 -> 4 entries.
+8. Re-ran: deterministic (identical sha256 across two runs), visual check
+   clean.
+9. OpenRouter review attempt (see status file): gemma-4-26b-a4b-it:free
+   -> 429 rate limit; ernie-5.5-flash-preview:free -> returned a
+   reasoning-only dump (content null, 4000 tokens on reasoning). Usable
+   review extracted from the reasoning field: no crash/blocking bugs;
+   cosmetic finding that the lead verification chips crossed the divider
+   rule. Fixed (draw_chip padding reduced, chip/figures/source moved up
+   2px). Re-rendered and re-verified determinism.
+
+Verification (final)
+--------------------
+- entry.png: 1024x1024, RGB, opens correctly, 229,267 bytes
+- sha256: 83c5ae06dd772f034bb52f9b9e91e9dc3932af241d4f6bbce6de6a3d390b09e0
+- determinism: two consecutive runs byte-identical
+- stories: 3 leads + 10 mid + 26 list = 39
+- regions: Europe, Middle East, East Asia, North America, Africa,
+  Latin America, South Asia, Southeast Asia, Oceania = 9
+- pins on map: 9 (Antalya, Dymer, Bahrain, Hong Kong, Gaza, Bayelsa,
+  Tana River, Jakarta, Pago Pago)
+- date-check box: 5 explicit exclusions (Peru quake 21 Nov, Riemann
+  claim 20 Nov, Akvan landfall 20 Nov, Liverpool v Man Utd 23 Nov,
+  drone-count discrepancy 186 vs 148/400)
+- no invented stories: every story has a named source and a
+  CONFIRMED / OFFICIAL / REPORTED / CLAIMED label
+- README badges: competition + rank + reward, owner unuserv01-lab,
+  repo news-image-20261122
+- runtime: Python + PIL only, no network, deterministic
+
+Known gaps / notes for the parent
+---------------------------------
+- Four topics (COP31, Russia drone barrage, Iran/Bahrain, Hong Kong)
+  were NOT re-searched with fresh primary-source reads in this session:
+  a developer instruction forbade repeating four earlier failed
+  searches on those exact topics. Corroboration: live leaderboard
+  titles of THIS campaign (multiple entrants agree on COP31 day two /
+  near deal, 186 drones, Iran hitting US bases in Bahrain, Hong Kong
+  vote) + Euronews "COP31 talks enter their final stretch" + One Turn
+  (Hong Kong vote details) + kalymnostimes (Dymer flat hit). Iran /
+  Bahrain strike rests on leaderboard titles only — labelled CLAIMED,
+  and the summary says Washington has not confirmed.
+- Renderer assumes fixed font paths /usr/share/fonts/truetype/dejavu
+  (same as the 20261121 entry, which passed practice in the same
+  harness family).
+- Map pins for Antalya (1) and Gaza (5) touch on the world map — they
+  are genuinely ~600 km apart; labels with leader lines disambiguate.
+- Kit CLI not yet downloaded (see step 3); parent handles bundle/submit.
