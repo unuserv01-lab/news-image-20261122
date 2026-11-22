@@ -27,4 +27,4 @@ os.makedirs(OUT_DIR, exist_ok=True)
 shutil.copyfile(SRC, OUT)
 
 assert os.path.getsize(OUT) == os.path.getsize(SRC), "copy size mismatch"
-print(f"entry image: {OUT} ({os.path.getsize(OUT)} bytes)"
+print(f"entry image: {OUT} ({os.path.getsize(OUT)} bytes)")
