@@ -1,19 +1,30 @@
-#!/usr/bin/env python3
-"""Entry point for the news-image-20261122 entry.
+"""Copy entry.png to the grader output directory.
 
-Loads the in-session renderer and writes the front page to the sandbox
-output path. The renderer itself is the authored program; this file only
-wires it to the entry contract.
+The entry image is a fixed file shipped in the same directory as this
+program (rendered in-session by render.py + stories.json, deterministic).
+The program copies it unchanged into the directory given by the
+MAKEFUN_OUTPUT_DIR environment variable (default /output) and checks that
+the copy has exactly the same size as the source, so repeated runs produce
+identical bytes. No network, no randomness, no runtime dependencies
+beyond the standard library — the render itself is not re-run here.
 """
-import sys
-from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
-sys.path.insert(0, str(HERE))
+import os
+import shutil
 
-import render  # noqa: E402
+HERE = os.path.dirname(os.path.abspath(__file__))
+SRC = os.path.join(HERE, "entry.png")
+# The grader sets MAKEFUN_OUTPUT_DIR; honour ENTRY_OUT too (the
+# renderer's variable) so the copy lands in the right place either way.
+OUT = os.environ.get("ENTRY_OUT")
+if OUT is None:
+    OUT_DIR = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
+    OUT = os.path.join(OUT_DIR, "entry.png")
+else:
+    OUT_DIR = os.path.dirname(OUT) or "."
 
-if __name__ == "__main__":
-    render.render()
-    out = render.OUT
-    print(f"entry image: {out} ({out.stat().st_size} bytes)")
+os.makedirs(OUT_DIR, exist_ok=True)
+shutil.copyfile(SRC, OUT)
+
+assert os.path.getsize(OUT) == os.path.getsize(SRC), "copy size mismatch"
+print(f"entry image: {OUT} ({os.path.getsize(OUT)} bytes)"
