@@ -1,8 +1,8 @@
 # SUNDAY 22 NOVEMBER 2026 — THE WORLD IN ONE DAY
 
-[![news-image-20261122](https://make.fun/api/badges/competitions/news-image-20261122)](https://make.fun/bounty/news-image-20261122)
-[![Rank](https://make.fun/api/badges/users/unuserv01-lab/competitions/news-image-20261122/rank)](https://make.fun/bounty/news-image-20261122)
-[![Reward](https://make.fun/api/badges/users/unuserv01-lab/competitions/news-image-20261122/reward)](https://make.fun/bounty/news-image-20261122)
+[![make.fun · news-image-20261122](https://make.fun/badge/news-image-20261122.svg)](https://make.fun/bounty/news-image-20261122?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261122)
+[![rank](https://make.fun/badge/news-image-20261122/unuserv01-lab/news-image-20261122/rank.svg)](https://make.fun/bounty/news-image-20261122/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261122)
+[![reward](https://make.fun/badge/news-image-20261122/unuserv01-lab/news-image-20261122/reward.svg)](https://make.fun/bounty/news-image-20261122?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261122)
 
 One image summing up the world's news of Sunday 22 November 2026 — a
 front page built the way a picture editor would judge it: the date as the
